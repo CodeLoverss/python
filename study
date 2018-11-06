@@ -1,51 +1,45 @@
-List = [[2, 3.5], [2.4, 4.3], [4, 5.4], [2.7, 5.3], [3.9, 5.35], [2.9, 7.1], [3.2, 7.2], [2.22, 3.3], [3.2, 7.3], [4, 9], [5, 9.1], [2.5, 3.4], [2.9, 3.3]]
-j = 0
-#计算最大值
-def max(a, b):
-    if a >= b: return a
-    else: return b
-#计算绝对值
-def absolute_value(a, b):
-    if (a-b) < 0:return (b-a)
-    else:return (a-b)
-#判断是否结束
-def if_finish(a):
-    global j
-    k = len(a)
-    for x in range(k-1):
-        if absolute_value(a[x][1], a[x+1][1])/max(a[x][1], a[x+1][1]) <= 0.02:
-            j = x
-            return 1
-    if x == k-2: return 0
-#更新列表
-def Update(a):
-    a[j][1] = average(a)
-    a[j][0] = a[j][0]+a[j+1][0]
-    a.pop(j+1)
-#计算渗透率
-def average(a):
-    return (a[j][0]*a[j][1]+a[j+1][0]*a[j+1][1])/(a[j][0]+a[j+1][0])
-#分段
-def piecewise():
-    value=List
-    while(if_finish(value)==1):
-        Update(value)
-    dicts(value)
-#组装字典
-def dicts(value):
-    dict = {'序号': [], '长度': [], '渗透率': []}
-    k = 0
-    li=[0 for x in range(len(value))]
-    ki=[0 for x in range(len(value))]
-    ji=[0 for x in range(len(value))]
-    for i in value:
-        li[k]=k+1
-        ki[k]=i[0]
-        ji[k]=i[1]
-        k+=1
-    dict['序号']=li
-    dict['长度']=ki
-    dict['渗透率']=ji
-    print(dict)
-
-piecewise()
+class pip(object):
+    lists = [[2, 3.5], [2.4, 4.3], [4, 5.4], [2.7, 5.3], [3.9, 5.35], [2.9, 7.1], [3.2, 7.2], [2.22, 3.3], [3.2, 7.3], [4, 9], [5, 9.1], [2.5, 3.4], [2.9, 3.3]]
+    j = 0
+    #判断是否结束
+    def if_finish(self,a):
+        global j
+        k = len(a)
+        for x in range(k-1):
+            if abs(a[x][1]-a[x+1][1])/max(a[x][1], a[x+1][1]) <= 0.02:
+                j = x
+                return 1
+        if x == k-2: return 0
+    #更新列表
+    def Update(self,a):
+        a[j][1] = self.average(a)
+        a[j][0] = a[j][0]+a[j+1][0]
+        a.pop(j+1)
+    #计算渗透率
+    def average(self,a):
+        return (a[j][0]*a[j][1]+a[j+1][0]*a[j+1][1])/(a[j][0]+a[j+1][0])
+    #分段
+    def piecewise(self):
+        j=0
+        value=self.lists
+        while(self.if_finish(value)==1):
+            self.Update(value)
+        self.dicts(value)
+    #组装字典
+    def dicts(self,value):
+        dict = {'序号': [], '长度': [], '渗透率': []}
+        k = 0
+        li=[0 for x in range(len(value))]
+        ki=[0 for x in range(len(value))]
+        ji=[0 for x in range(len(value))]
+        for i in value:
+            li[k]=k+1
+            ki[k]=i[0]
+            ji[k]=i[1]
+            k+=1
+        dict['序号']=li
+        dict['长度']=ki
+        dict['渗透率']=ji
+        print(dict)
+instance = pip()
+instance.piecewise()
